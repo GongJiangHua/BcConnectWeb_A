@@ -1,44 +1,42 @@
 package main
 
 import (
-	"BcConnectWeb_A/btcService"
 	"BcConnectWeb_A/dbmysql"
 	_ "BcConnectWeb_A/routers"
-	"fmt"
 	"github.com/astaxie/beego"
 )
 //https://github.com/GongJiangHua/BcConnectWeb.git
 
 func main() {
-	blockount,err :=btcService.GetBlockCount()
-	if err != nil{
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("区块总数:",blockount)
-
-	//最新区块的hash
-	hash,err:=btcService.GetBestBlockHash()
-    if err!= nil{
-    	fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("最新区块的hash:",hash)
-
-	//获取区块的难度
-	difficulty,err :=btcService.GetDifficulty()
-	if err != nil{
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("获取区块的难度:",difficulty)
-
-	address,err :=btcService.GetNewAddress()
-	if err!= nil{
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("获取新地址:",address)
+	//blockount,err :=btcService.GetBlockCount()
+	//if err != nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("区块总数:",blockount)
+	//
+	////最新区块的hash
+	//hash,err:=btcService.GetBestBlockHash()
+    //if err!= nil{
+    //	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("最新区块的hash:",hash)
+	//
+	////获取区块的难度
+	//difficulty,err :=btcService.GetDifficulty()
+	//if err != nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("获取区块的难度:",difficulty)
+	//
+	//address,err :=btcService.GetNewAddress()
+	//if err!= nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("获取新地址:",address)
 
 	
 	dbmysql.Connect()

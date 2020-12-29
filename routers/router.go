@@ -17,5 +17,9 @@ func init() {
 
    beego.Router("/register_sms",&controllers.RegisterSmsController{})
 
+    //验证码登录接口
+    beego.Router("/login_sms",&controllers.LoginSmsController{})
+    beego.Router("/send_sms",&controllers.SendSmsController{})
+
 
 }
