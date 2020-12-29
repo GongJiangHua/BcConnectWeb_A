@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"BcConnectWeb_A/models"
+	"Item/models"
 	"fmt"
 	"github.com/astaxie/beego"
 )

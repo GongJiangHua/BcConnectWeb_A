@@ -1,14 +1,13 @@
 package main
 
 import (
-	"BcConnectWeb_A/btcService"
-	"BcConnectWeb_A/dbmysql"
-	_ "BcConnectWeb_A/routers"
+	"Item/btcService"
+	"Item/dbmysql"
+	_ "Item/routers"
 	"fmt"
 	"github.com/astaxie/beego"
 )
-//https://github.com/GongJiangHua/BcConnectWeb.git
-
+//code=9ced7f4713ff616ac333
 func main() {
 	blockount,err :=btcService.GetBlockCount()
 	if err != nil{
@@ -39,8 +38,6 @@ func main() {
 		return
 	}
 	fmt.Println("获取新地址:",address)
-
-	
 	dbmysql.Connect()
 	//设置静态资源文件映射
 	beego.SetStaticPath("/js", "./static/js")
@@ -48,3 +45,5 @@ func main() {
 	beego.SetStaticPath("/img", "./static/img")
 	beego.Run()
 }
+
+

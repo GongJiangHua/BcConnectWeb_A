@@ -1,14 +1,15 @@
 package test
 
 import (
-	_ "BcConnectWeb_A/routers"
 	"net/http"
 	"net/http/httptest"
-	"path/filepath"
-	"runtime"
 	"testing"
+	"runtime"
+	"path/filepath"
+	_ "Item/routers"
 
 	"github.com/astaxie/beego"
+	. "github.com/smartystreets/goconvey/convey"
 )
 
 func init() {

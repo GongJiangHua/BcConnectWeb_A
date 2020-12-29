@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"BcConnectWeb_A/controllers"
+	"Item/controllers"
 	"github.com/astaxie/beego"
 )
 

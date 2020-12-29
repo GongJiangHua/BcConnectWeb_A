@@ -1,8 +1,8 @@
 package models
 
 import (
-	"BcConnectWeb_A/dbmysql"
-	"BcConnectWeb_A/utils"
+	"Item/dbmysql"
+	"Item/utils"
 	"log"
 )
 

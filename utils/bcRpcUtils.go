@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"BcConnectWeb_A/Constants"
-	"BcConnectWeb_A/entity"
+	"Item/Constants"
+	"Item/entity"
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
