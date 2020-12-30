@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"BcConnectWeb_A/models"
+	"fmt"
 	"github.com/astaxie/beego"
-	"time"
 )
 
 type LoginSmsController struct {
@@ -41,18 +41,21 @@ func (l *LoginSmsController) Post() {
 
 	//查询用户提交的登录信息是否正确
 	sms,err := models.QuerySmsRecord(smsLogin.BizId,smsLogin.Phone,smsLogin.Code)
+	fmt.Println("验证码登录获取到的数据",smsLogin.BizId,smsLogin.Phone,smsLogin.Code)
 	if err != nil {
 		l.Ctx.WriteString("抱歉，验证码登录错误，请稍后重试")
+		fmt.Println("错了：",err.Error())
 	}
+	fmt.Println(sms.BizId)
 	if sms.BizId == "" {//验证码错误，手机号错误
 		l.Ctx.WriteString("手机号或验证码错误，请重新输入")
 		return
 	}
-	now := time.Now().Unix()
-	if (now - sms.TimeStamp) > 30000 {
-		l.Ctx.WriteString("验证码已失效，请重新获取")
-		return
-	}
+	//now := time.Now().Unix()
+	//if (now - sms.TimeStamp) > 30000 {
+	//	l.Ctx.WriteString("验证码已失效，请重新获取")
+	//	return
+	//}
 
 	l.Ctx.WriteString("来啦")
 }

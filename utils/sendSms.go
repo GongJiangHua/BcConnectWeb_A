@@ -31,30 +31,26 @@ const SMS_TLP_KYC  = "SMS_176525619"//实名认证的短信模板
 func SemdSms(phone string,code string,template string) (*SmsResult,error) {
 	config := beego.AppConfig
 	//获取配置文件中的数据
-	smsSccesKey := config.String("sms_scces_key")
-	smsSccesSecret := config.String("sms_scces_secret")
-	client,err := dysmsapi.NewClientWithAccessKey("cn-hangzhou",smsSccesKey,smsSccesSecret)
+	smsAccesKey := config.String("sms_acces_key")
+	smsAccesSecret := config.String("sms_acces_secret")
+
+	client,err := dysmsapi.NewClientWithAccessKey("cn-hangzhou",smsAccesKey,smsAccesSecret)
 	if err != nil {
 		return nil,err
 	}
 
 	request := dysmsapi.CreateSendSmsRequest()
-	fmt.Println("request：",request)
 	request.PhoneNumbers = phone//要发送的手机号
-	request.SignName = "忠国移动"
+	request.SignName = "线上餐厅"
 	request.TemplateCode = template//指定短信模板
-	smsCode := SmsCode{Code:code}
+	smsCode := SmsCode{
+		Code:code,
+	}
 
 	smsbytes,_ := json.Marshal(smsCode)
 	request.TemplateParam = string(smsbytes)
 
 	response,err := client.SendSms(request)
-	fmt.Println("resqponse:",response)
-	fmt.Println("resqponse:",response.BizId)
-	fmt.Println("resqponse:",response.Code)
-	fmt.Println("resqponse:",response.Message)
-	fmt.Println("resqponse:",response.RequestId)
-
 	if err != nil {
 		fmt.Println("这：",err.Error())
 	}

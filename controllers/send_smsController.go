@@ -3,6 +3,7 @@ package controllers
 import (
 	"BcConnectWeb_A/models"
 	"BcConnectWeb_A/utils"
+	"fmt"
 	"github.com/astaxie/beego"
 	"time"
 )
@@ -48,6 +49,7 @@ func (s *SendSmsController) Post() {
 	_,err = smsRecord.SaveSmsRecord()
 	if err != nil {
 		s.Ctx.WriteString("抱歉，验证码说去失败，请重试")
+		fmt.Println("有错误：",err.Error())
 		return
 	}
 

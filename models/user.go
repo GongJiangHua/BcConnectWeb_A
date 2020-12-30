@@ -15,7 +15,7 @@ type User struct {
 //用户信息保存到数据库
 func (u User) AddUser() (int64, error) {
 	u.Password = utils.MD5HashString(u.Password)
-	rs, err := dbmysql.Db.Exec("insert into user(phone,password) values(?,?)",
+	rs, err := dbmysql.Db.Exec("insert into account(phone,password) values(?,?)",
 		u.Phone, u.Password)
 	if err != nil { //保存数据遇到错误
 		//fmt.Println(err.Error())
@@ -34,7 +34,7 @@ func (u User) QuerUser() (*User, error) {
 	/*row := dbmysql.Db.QueryRow("select phone,password from user where phone = ? and password = ?",
 	u.Phone, u.Password)
 	*/
-	row, err := dbmysql.Db.Query("select phone,password from user where phone = ? and password = ?",
+	row, err := dbmysql.Db.Query("select phone,password from account where phone = ? and password = ?",
 		u.Phone, u.Password)
 	if err != nil {
 		log.Fatal(err)
