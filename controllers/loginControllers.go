@@ -33,6 +33,6 @@ func (c *LoginController) Post() {
 		c.Ctx.WriteString("抱歉，用户登录失败，请重试")
 		return
 	}
-	c.TplName = "home.html"
+	c.TplName = "query.html"
 }
 

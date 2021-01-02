@@ -19,7 +19,10 @@ func init() {
 
     //验证码登录接口
     beego.Router("/login_sms",&controllers.LoginSmsController{})
+    //发送验证码接口
     beego.Router("/send_sms",&controllers.SendSmsController{})
+    //查询btc信息接口
+    beego.Router("/query",&controllers.QueryController{})
 
 
 }
