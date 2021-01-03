@@ -1,8 +1,7 @@
 package utils
 
 import (
-	"BcConnectWeb_A/Constants"
-	"BcConnectWeb_A/entity"
+	"BtWeb/models"
 	"bytes"
 	"encoding/json"
 	"io/ioutil"
@@ -20,7 +19,7 @@ import (
 
 //1、准备一个json数据用于向
 func PrepareJsonStr(method string,params []interface{}) ([]byte,error) {
-	Mes := entity.RPCRequest{}
+	Mes := models.RPCRequest{}
 	Mes.Method = method
 	Mes.Jsonrpc = "2.0"
 	Mes.Id = time.Now().Unix()
@@ -37,14 +36,14 @@ func SendRPCPost(jsonBytes []byte) ([]byte,error) {
 	//准备一个客户端
 	client := http.Client{}
 	//实例化一个请求
-	req ,err := http.NewRequest("POST",Constants.RPCURL,bytes.NewBuffer(jsonBytes))
+	req ,err := http.NewRequest("POST",RPCURL,bytes.NewBuffer(jsonBytes))
 	if err != nil {
 		return nil,err
 	}
 	//为请求头添加数据
 	req.Header.Add("Encoding","UTF-8")
 	req.Header.Add("Content-Type","application/json")
-	req.Header.Add("Authorization","Basic "+Base64Str(Constants.RPCUSER+":"+Constants.RPCPASSWORD))
+	req.Header.Add("Authorization","Basic "+Base64Str(RPCUSER+":"+RPCPASSWORD))
 	//使用客户端发起请求
 	resp,err := client.Do(req)
 	if err != nil {
