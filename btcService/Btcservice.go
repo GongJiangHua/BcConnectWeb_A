@@ -5,6 +5,7 @@ import (
 	"BcConnectWeb_A/utils"
 	"encoding/json"
 	"fmt"
+	"github.com/mitchellh/mapstructure"
 )
 
 //该包用来封装bitcoin命令
@@ -49,22 +50,22 @@ func GetBestBlockHash() (interface{}, error) {
 }
 
 //根据区块高度查询区块hash
-//func GetBlockHashByHeight() (interface{}, error) {
-//	jsonMes, err := utils.PrepareJsonStr("getblockhash",nil)
-//	if err != nil {
-//		return nil, err
-//	}
-//	resBytes, err := utils.SendRPCPost(jsonMes)
-//	if err != nil {
-//		return nil, err
-//	}
-//	Rpcresult := entity.RPCResult{}
-//	err = json.Unmarshal(resBytes,&Rpcresult)
-//	if err != nil {
-//		return nil,err
-//	}
-//	return Rpcresult.Result, nil
-//}
+func GetBlockHashByHeight(height int64) (interface{}, error) {
+	jsonMes, err := utils.PrepareJsonStr("getblockhash",height)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := entity.RPCResult{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	return Rpcresult.Result, nil
+}
 
 //用于获取当前区块的难度
 func GetDifficulty() (interface{}, error) {
@@ -76,8 +77,7 @@ func GetDifficulty() (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	Rpcresult := entity.RPCResult{}
-	err = json.Unmarshal(resBytes,&Rpcresult)
+	Rpcresult,err := entity.ParseResultBytes(resBytes)
 	if err != nil {
 		return nil,err
 	}
@@ -94,12 +94,13 @@ func GetBlockChainInfo() (*entity.BlockChainInfo,error) {
 	if err != nil {
 		return nil,err
 	}
-	Rpcresult := entity.BlockChainInfo{}
-	err = json.Unmarshal(resBytes,&Rpcresult)
+	Rpcresult,err := entity.ParseResultBytes(resBytes)
 	if err != nil {
 		return nil,err
 	}
-	return &Rpcresult,nil
+	var blockchaininfo entity.BlockChainInfo
+	err = mapstructure.Decode(Rpcresult,&blockchaininfo)
+	return &blockchaininfo,nil
 }
 
 //生成一个新地址
