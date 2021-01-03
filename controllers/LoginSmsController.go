@@ -57,5 +57,5 @@ func (l *LoginSmsController) Post() {
 	//	return
 	//}
 
-	l.TplName = "query.html"
+	l.TplName = "zhihu_login_sms.html"
 }

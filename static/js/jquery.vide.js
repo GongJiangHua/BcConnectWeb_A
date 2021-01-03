@@ -270,10 +270,10 @@
     // Set a video poster
     if (posterType === 'detect') {
       findPoster(poster, function(url) {
-        $wrapper.css('background-image', 'url(' + url + ')');
+        $wrapper.css('background-img', 'url(' + url + ')');
       });
     } else if (posterType !== 'none') {
-      $wrapper.css('background-image', 'url(' + poster + '.' + posterType + ')');
+      $wrapper.css('background-img', 'url(' + poster + '.' + posterType + ')');
     }
 
     // If a parent element has a static position, make it relative
@@ -351,7 +351,7 @@
         visibility: 'visible',
         opacity: 1
       });
-      $wrapper.css('background-image', 'none');
+      $wrapper.css('background-img', 'none');
     });
 
     // Resize event is available only for 'window'

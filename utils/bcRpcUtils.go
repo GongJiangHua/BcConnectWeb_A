@@ -63,3 +63,13 @@ func SendRPCPost(jsonBytes []byte) ([]byte,error) {
 		return nil,err
 	}
 }
+
+func Conf() map[string]string {
+	Btc := make(map[string]string)
+	Btc["getblockchaininfo"] = "getblockchaininfo"
+	Btc["getbalances"] = "getbalances"
+	Btc["getblockcount"] = "getblockcount"
+
+	return Btc
+
+}

@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"BcConnectWeb_A/models"
+	"BcConnectWeb_A/utils"
 	"fmt"
 	"github.com/astaxie/beego"
 )
@@ -17,9 +18,9 @@ func (q QueryController) Post() {
 		q.Ctx.WriteString("抱歉，数据解析失败")
 		return
 	}
-	fmt.Println("order：",order)
-	fmt.Println(order.Order)
 
+	value := utils.Conf()
+	fmt.Println("value：",value)
 
 	q.Ctx.WriteString("查到了")
 }
