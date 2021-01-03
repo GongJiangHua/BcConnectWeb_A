@@ -1,10 +1,13 @@
 package btcService
 
 import (
-	"BcConnectWeb_A/entity"
-	"BcConnectWeb_A/utils"
+	"BcRPCCode/entity"
+	"BtWeb/models"
+	"BtWeb/utils"
 	"encoding/json"
 	"fmt"
+	"github.com/mitchellh/mapstructure"
+	_ "github.com/mitchellh/mapstructure"
 )
 
 //该包用来封装bitcoin命令
@@ -21,7 +24,7 @@ func GetBlockCount() (interface{}, error) {
 		fmt.Println("请求RPC服务失败，错误原因：", err.Error())
 		return nil, err
 	}
-	Rpcresult := entity.RPCResult{}
+	Rpcresult :=models.RPCResult{}
 	err = json.Unmarshal(resBytes,&Rpcresult)
 	if err != nil {
 		return nil,err
@@ -34,18 +37,109 @@ func GetBlockCount() (interface{}, error) {
 func GetBestBlockHash() (interface{}, error) {
 	jsonMes, err := utils.PrepareJsonStr("getbestblockhash", nil)
 	if err != nil {
-		return  nil,err
+		return nil, err
 	}
 	resBytes, err := utils.SendRPCPost(jsonMes)
 	if err != nil {
 		return nil, err
 	}
-	Rpcresult := entity.RPCResult{}
+	Rpcresult := models.RPCResult{}
 	err = json.Unmarshal(resBytes,&Rpcresult)
 	if err != nil {
 		return nil,err
 	}
 	return Rpcresult.Result, nil
+}
+
+
+func WallInfo() (*models.WallInfo, error) {
+	jsonMes, err := utils.PrepareJsonStr("getwalletinfo", nil)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := models.WallInfo{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	var walletinfo models.WallInfo
+	err = mapstructure.Decode(walletinfo,&Rpcresult)
+	if err!=nil {
+		return nil,err
+	}
+	return &walletinfo, nil
+}
+
+
+
+func MiningInfo() (*models.MiningInfo, error) {
+	jsonMes, err := utils.PrepareJsonStr("getmininginfo", nil)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := models.MiningInfo{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	var mininginfo models.MiningInfo
+	err = mapstructure.Decode(mininginfo,&Rpcresult)
+	if err!=nil {
+		return nil,err
+	}
+	return &mininginfo, nil
+}
+
+func Abortrescan() (*models.Abortrescan, error) {
+	jsonMes, err := utils.PrepareJsonStr("abortrescan", nil)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := models.Abortrescan{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	var abortrescans models.Abortrescan
+	err = mapstructure.Decode(abortrescans,&Rpcresult)
+	if err!=nil {
+		return nil,err
+	}
+	return &abortrescans, nil
+}
+
+func GetNetTotals() (*models.GetNetToTals, error) {
+	jsonMes, err := utils.PrepareJsonStr("getnettotals", nil)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := models.GetNetToTals{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	var getnettotals models.GetNetToTals
+	err = mapstructure.Decode(getnettotals,&Rpcresult.Uploadtarget)
+	if err!=nil {
+		return nil,err
+	}
+	return &getnettotals, nil
 }
 
 //根据区块高度查询区块hash
@@ -85,7 +179,7 @@ func GetDifficulty() (interface{}, error) {
 }
 
 //用于获取当前区块链信息
-func GetBlockChainInfo() (*entity.BlockChainInfo,error) {
+func GetBlockChainInfo() (*models.BlockChainInfo,error) {
 	jsonMes, err := utils.PrepareJsonStr("getblockchaininfo",nil)
 	if err != nil {
 		return nil,err
@@ -94,47 +188,10 @@ func GetBlockChainInfo() (*entity.BlockChainInfo,error) {
 	if err != nil {
 		return nil,err
 	}
-	Rpcresult := entity.BlockChainInfo{}
+	Rpcresult := models.BlockChainInfo{}
 	err = json.Unmarshal(resBytes,&Rpcresult)
 	if err != nil {
 		return nil,err
 	}
 	return &Rpcresult,nil
 }
-
-//生成一个新地址
-func GetNewAddress()(interface{},error)  {
-	jsonMes, err := utils.PrepareJsonStr("getnewaddress", nil)
-	if err != nil {
-		return nil, err
-	}
-	resBytes, err := utils.SendRPCPost(jsonMes)
-	if err != nil {
-		return nil, err
-	}
-	Rpcresult := entity.RPCResult{}
-	err = json.Unmarshal(resBytes,&Rpcresult)
-	if err != nil {
-		return nil,err
-	}
-	return Rpcresult.Result, nil
-
-}
-
-//
-/*func GetBlockHeader(hash interface{})(interface{},error)  {
-	jsonMes, err := utils.PrepareJsonStr("getblockheader", nil)
-	if err != nil {
-		return nil, err
-	}
-	resBytes, err := utils.SendRPCPost(jsonMes)
-	if err != nil {
-		return nil, err
-	}
-	Rpcresult := entity.RPCResult{}
-	err = json.Unmarshal(resBytes,&Rpcresult)
-	if err != nil {
-		return nil,err
-	}
-	return Rpcresult.Result, nil*/
-
