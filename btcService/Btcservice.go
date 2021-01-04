@@ -1,6 +1,7 @@
 package btcService
 
 import (
+	models2 "BcConnectWeb_A/models"
 	"BcRPCCode/entity"
 	"BtWeb/models"
 	"BtWeb/utils"
@@ -75,8 +76,32 @@ func WallInfo() (*models.WallInfo, error) {
 }
 
 
+func WallInfo() (*models.WallInfo, error) {
+	jsonMes, err := utils.PrepareJsonStr("getwalletinfo", nil)
+	if err != nil {
+		return nil, err
+	}
+	resBytes, err := utils.SendRPCPost(jsonMes)
+	if err != nil {
+		return nil, err
+	}
+	Rpcresult := models.WallInfo{}
+	err = json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	var walletinfo models.WallInfo
+	err = mapstructure.Decode(walletinfo,&Rpcresult)
+	if err!=nil {
+		return nil,err
+	}
+	return &walletinfo, nil
+}
 
-func MiningInfo() (*models.MiningInfo, error) {
+
+
+
+func RpcInfo() (*models2.RpcInfo, error) {
 	jsonMes, err := utils.PrepareJsonStr("getmininginfo", nil)
 	if err != nil {
 		return nil, err
@@ -90,12 +115,12 @@ func MiningInfo() (*models.MiningInfo, error) {
 	if err != nil {
 		return nil,err
 	}
-	var mininginfo models.MiningInfo
-	err = mapstructure.Decode(mininginfo,&Rpcresult)
+	var rpcInfo models2.RpcInfo
+	err = mapstructure.Decode(rpcInfo,&Rpcresult)
 	if err!=nil {
 		return nil,err
 	}
-	return &mininginfo, nil
+	return &rpcInfo, nil
 }
 
 func Abortrescan() (*models.Abortrescan, error) {
