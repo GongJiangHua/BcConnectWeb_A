@@ -5,6 +5,7 @@ import (
 	"BcConnectWeb_A/entity"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -33,11 +34,11 @@ func PrepareJsonStr(method string,params []interface{}) ([]byte,error) {
 }
 
 
-func SendRPCPost(jsonBytes []byte) ([]byte,error) {
+func SendRPCPost(jsonMes []byte) ([]byte,error) {
 	//准备一个客户端
 	client := http.Client{}
 	//实例化一个请求
-	req ,err := http.NewRequest("POST",Constants.RPCURL,bytes.NewBuffer(jsonBytes))
+	req ,err := http.NewRequest("POST",Constants.RPCURL,bytes.NewBuffer(jsonMes))
 	if err != nil {
 		return nil,err
 	}
@@ -57,9 +58,32 @@ func SendRPCPost(jsonBytes []byte) ([]byte,error) {
 		if err != nil {
 			return nil,err
 		}
-
 		return resBytes,nil
 	}else {
 		return nil,err
 	}
+}
+/*btc命令调用封装函数 命令 [参数1，参数2 ...]
+method： 比特币节点具体命令
+parms ：命令对应的具体参数
+return：比特币 Result
+*/
+func GetMsgByCommand(method string, parms []interface{}) (*entity.RPCResult, error) {
+	jsonBytes ,_:= PrepareJsonStr(method, parms)
+	fmt.Println(jsonBytes)
+	resBytes,err := SendRPCPost(jsonBytes)
+	if err != nil {
+		return nil,err
+	}
+	fmt.Println("jsonStr:",string(resBytes))
+	return ParseResultBytes(resBytes)
+}
+//解析返回的结果，并且反序列化成结构体
+func ParseResultBytes(resBytes []byte) (*entity.RPCResult,error) {
+	Rpcresult := entity.RPCResult{}
+	err := json.Unmarshal(resBytes,&Rpcresult)
+	if err != nil {
+		return nil,err
+	}
+	return &Rpcresult,nil
 }

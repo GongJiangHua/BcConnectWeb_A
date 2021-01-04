@@ -18,27 +18,27 @@ func main() {
 	fmt.Println("区块总数:",blockount)
 
 	//最新区块的hash
-	hash,err:=btcService.GetBestBlockHash()
-    if err!= nil{
-    	fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("最新区块的hash:",hash)
+	//hash,err:=btcService.GetBestBlockHash()
+    //if err!= nil{
+    //	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("最新区块的hash:",hash)
 
 	//获取区块的难度
-	difficulty,err :=btcService.GetDifficulty()
-	if err != nil{
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("获取区块的难度:",difficulty)
-
-	address,err :=btcService.GetNewAddress()
-	if err!= nil{
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Println("获取新地址:",address)
+	//difficulty,err :=btcService.GetDifficulty()
+	//if err != nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("获取区块的难度:",difficulty)
+	//
+	//address,err :=btcService.GetNewAddress()
+	//if err!= nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("获取新地址:",address)
 
 	
 	dbmysql.Connect()
