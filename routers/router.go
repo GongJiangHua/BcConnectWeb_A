@@ -16,4 +16,6 @@ func init() {
     beego.Router("/register_sms",&controllers.RegisterSmsController{})
 	//查询页面获取用户想要查询的内容，进行分析
 	beego.Router("/address",&controllers.SerchResultControllers{})
+	beego.Router("/blockchain",&controllers.SerchResultControllers{})
+	beego.Router("/network",&controllers.SerchResultControllers{})
 }
