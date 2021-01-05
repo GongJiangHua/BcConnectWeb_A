@@ -71,5 +71,4 @@ func Conf() map[string]string {
 	Btc["getblockcount"] = "getblockcount"
 
 	return Btc
-
 }

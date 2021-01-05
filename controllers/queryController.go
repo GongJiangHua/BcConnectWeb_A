@@ -19,8 +19,11 @@ func (q QueryController) Post() {
 		return
 	}
 
-	value := utils.Conf()
-	fmt.Println("value：",value)
+	Btc := utils.Conf()
+	fmt.Println("len(btc)",len(Btc))
+	for key,value :=range Btc{
+		fmt.Println("key,value:",key,value)
+	}
 
 	q.Ctx.WriteString("查到了")
 }

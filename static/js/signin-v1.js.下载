@@ -1,0 +1,334 @@
+/**
+ * 2011.05.18 Denis
+ */
+jQuery.namespace('FE.member');
+(function($, FM){
+    var tblSigin = $('#tbl-signin'),
+    loginObj,
+    userList,
+    quicklogin,
+    loginchina;
+    $.extend(FM, {
+    	quickloginInit : function() {
+			if(!window.ActiveXObject) {
+				//只支持IE
+				return;
+			}
+			
+			quicklogin = $('#quicklogin');
+			loginchina = $('#loginchina');
+			if(quicklogin.length===0 || loginchina.length===0){
+				//不存在相关div
+				return;
+			}
+			
+			try {
+				 //创建登录对象
+				 loginObj = new ActiveXObject("AliIMSSOLoginM.SSOLoginCtrl.1");
+				 if(loginObj == null) {
+				 // 当前浏览器或域名不支持这个控件
+				 return;
+				 }
+				 var initdata = loginObj.CreateSSOData();
+				
+				 //参数暂时保留，不用，初始化快速登录控件
+				 var iniRet = loginObj.InitSSOLoginCtrl(initdata, 0);
+	
+				 //获取已经登录的中文站用户
+				 userList = loginObj.GetUserList(2, 1);
+				 if(userList == null || userList.GetSize() < 1) {
+				 // 没有已登录的中文站旺旺
+				 return;
+				 }
+				 
+				var lastLoginId = FE.util.lastLoginId,
+				hasLastLoginId = false,
+				uSize = userList.GetSize(),
+				strHTML = '',
+				quickloginClass = '';
+				if(uSize == 1) {
+					// 只有一个，直接使用label显示用户名
+					quickloginClass = "quicklogin-forOne";
+					var ssodata = userList.GetItemData(0);
+					if (ssodata != null){
+						var uid = ssodata.GetDataStr('strKey_ShortUserID');
+						strHTML = '<input type="hidden" name="ql-userIndex" value="0"/>\
+								  <label>'+uid+'</label>';
+						FM.showQuickLogin(quickloginClass, strHTML);
+					}
+					return;
+				} else {
+					if(uSize <= 3) {
+						quickloginClass = "quicklogin-forThree";
+					} else {
+						quickloginClass = "quicklogin-forMore";
+					}
+					for(var i = uSize-1; i >= 0; --i) {
+						var ssodata = userList.GetItemData(i);
+						if(ssodata != null) {
+							var uid = ssodata.GetDataStr('strKey_ShortUserID');
+							//如果uid为lastLoginId则默认选中radio，若列表中不存在lastLoginId，那默认选中第0个（登录旺旺最迟的号）
+							if(!hasLastLoginId && (uid==lastLoginId || i==0)){
+								strHTML = '<li><label><input value=' + i + ' type="radio" name="ql-userIndex" class="ql-radio" checked="checked"/>' + uid + '</label></li>' + strHTML;
+								hasLastLoginId=true;
+							}else{
+								strHTML = '<li><label><input value=' + i + ' type="radio" name="ql-userIndex" class="ql-radio"/>' + uid + '</label></li>' + strHTML;
+							}
+						}
+					}
+					strHTML = '<ul>' + strHTML + '</ul>';
+					FM.showQuickLogin(quickloginClass, strHTML);
+				}
+			} catch(e) {
+				// 没有安装插件
+				return;
+			}
+		},
+		backToLoginchina : function(){
+			quicklogin.hide();
+			loginchina.show();
+        },
+		showQuickLogin : function(classname, htmlStr) {
+			var qlContext = $('.quicklogin-loginid');
+			if(qlContext) {
+				quicklogin.removeClass().addClass(classname);
+				qlContext.html(htmlStr);
+				$('#quicklogin .submit').click(function(e){
+					e.preventDefault();
+					aliclick(this,'tracelog=msignin_quicksignin_sub');
+					FM.quickLoginIndex($('input[name=ql-userIndex]:checked').val());
+				});
+				$('.ql-switch2Signin').click(function(e){
+					e.preventDefault();
+					aliclick(this,'tracelog=msignin_quicksignin_chg');
+					FM.backToLoginchina();
+				});
+				loginchina.hide();
+				quicklogin.show();
+				aliclick(this,'tracelog=msignin_quicksignin');
+			}
+		},
+		quickLoginIndex : function(index) {
+			var done = $('#loginchina input[name=Done]').val();
+       		try{
+				if (loginObj != null && userList!=null){
+					var ssodata = userList.GetItemData(index);
+					if (ssodata != null){
+						//开始免登，如果成功，内部会跳转
+						var result = loginObj.BeginSSOLogin(0,ssodata);
+						if (result != null){
+							//拿返回值
+							var resultCode = result.GetDataStr('strKey_GOResult');
+							if(resultCode=='1'){
+								var loginUrl = result.GetDataStr('strKey_ResultURL');
+								$.ajax(loginUrl, {
+					                dataType: 'jsonp',
+					                data: $.paramSpecial({
+					                    url: done,
+	                        			errurl: done
+					                }),
+					                timeout:3000,
+					                success: function(o){
+					                	if(o.success){
+					                		// 登录成功
+					                		window.location.href=o.url;
+					                	}else{
+					                		FM.backToLoginchina();
+					                	}
+					                },
+					                error:function(o){
+					                	aliclick(this,'tracelog=msignin_quicksignin_err');
+					                	FM.backToLoginchina();
+					                }
+					            });
+					            return;
+							}
+						}
+					}
+				}
+			} catch(e) {
+				// 调用控件发生异常
+			}
+			//没有免登成功，返回正常登录页面
+			FM.backToLoginchina();
+		},
+        accountInit: function(){
+			var account = $('#account');
+            if (!account.val() && FE.util.lastLoginId) {
+                account.val(FE.util.lastLoginId);
+            }
+        },
+        placeholderInit: function(){
+            if (!('placeholder' in document.createElement('input'))) {
+                var els = $('input[placeholder]');
+                els.each(function(i, el){
+                    var self = $(el), defValue = self.attr('placeholder'), label = $('<label>'), ofs = self.offset(), des = {
+                        left: ofs.left + 4,
+                        top: ofs.top + 5
+                    }, gid = el.id;
+                    if (!gid) {
+                        gid = 'ph' + $.guid++;
+                        self.attr('id', gid);
+                    }
+                    self.after(label);
+                    label.html(defValue).attr('for', gid).css({
+                        position: 'absolute',
+                        color: '#CCC',
+                        cursor: 'text'
+                    }).offset(des);
+                    self.val() && label.hide();
+                    self.bind({
+                        focus: function(){
+                            label.hide();
+                        },
+                        blur: function(){
+                            !this.value && label.show();
+                        }
+                    }).triggerHandler('blur');
+                });
+            }
+            
+        },
+        formInit: function(){
+            var codeimg = $('td>img', tblSigin), src = codeimg.attr('src');
+            $('td>input', tblSigin).one('focus', function(){
+                var tr = $(this).closest('tr');
+                tr.removeClass('err')
+                $('div.n', tr).remove();
+            }).bind('focus', function(){
+                var tr = $(this).closest('tr');
+                tr.addClass('focus');
+                if (this.type === 'password' && this.createTextRange) {
+                    var range = this.createTextRange();
+                    range.collapse(true);
+                    range.moveStart('character', this.value.length);
+                    range.select();
+                }
+            }).bind('blur', function(){
+                var tr = $(this).closest('tr');
+                tr.removeClass('focus');
+            });
+            $('#changecode').click(function(e){
+                e.preventDefault();
+                codeimg.prop('src', src + '&t=' + ($.guid++));
+            });
+        },
+		//两种登录方式的切换（B2B账号和支付宝账号）相关代码
+        loginTab: function(){
+        	$('a.taobao-login-trigger').click(function(){
+                $('#loginchina-wrapper').toggleClass('fd-hide');
+                $('#alipay-login-div').toggleClass('fd-hide');
+                $('#tblogin').toggleClass('fd-hide');
+                $('#taobao-clare').toggleClass('fd-hide');
+                aliclick(this,'tracelog=web_taobao_login_click_20130322');
+        	});
+        	$('#cbu-login-trigger').click(function(){
+                $('#loginchina-wrapper').toggleClass('fd-hide');
+                $('#alipay-login-div').toggleClass('fd-hide');
+                $('#tblogin').toggleClass('fd-hide');
+                $('#taobao-clare').toggleClass('fd-hide');
+                aliclick(this,'tracelog=web_back_cbu_login_click_20130322');
+        	});
+        },
+		initTab:function(){
+			var search=decodeURIComponent(window.location.search.substring(1)),
+			    searchList=search.split('&');
+			
+			for(var i=0;i<searchList.length;i++){
+				if (searchList[i].indexOf('inittab')!=-1) {
+					var tabName = searchList[i].substring(searchList[i].indexOf('=') + 1);
+					if (tabName === 'alipaySignin') {
+						$('#alipay-login-link a').trigger('click');
+					}else if(tabName === 'taobaoSignin'){
+						$('a.taobao-login-trigger').trigger('click');
+					}
+				}
+			}	
+		},
+		setUmpAd:function(cmsPageName){
+			var thiz=this;
+     		$.ajax({
+	            url: 'https://view.1688.com/cmsinclude/'+ cmsPageName +'.html',
+	            dataType: 'jsonp',
+	            jsonpCallback: '_cms_vm_jsonp_callback_'
+	        }).done(function(data) {
+	        	var ad=$(data.content);
+   				$(".feature").html(ad);
+   				//获取广告
+   				thiz.fetchAdInfoFromRMP();
+	        }).fail(function(data){
+	        	console.log("get the cms page cbu_login_ad_ump failed:"+JSON.stringify(data));
+	        });
+     	},
+		fetchAdInfoFromRMP:function(){
+            //调用钻展JSONP接口
+			var clubServer=$("#clubServer").val();
+			var tuiguangServer=$("#tuiguangServer").val();
+			var imageServer=$("#imageServer").val();
+            var guiguangUrl=tuiguangServer+"adread/queryAdContent.jsonp?resourceCode=LOGIN_1688_MAIN_1";
+            var defaultURL=$(".ump-ad-default").attr("href");
+            var defaultImgURL=$(".ump-ad-default").attr("src");
+            var url=defaultURL;
+            var imgURL=defaultImgURL;
+            try{
+                $.ajax(guiguangUrl, {
+                    dataType: 'jsonp',
+                    data:{},
+                    timeout:3000,
+                    success: function(o){
+                        if(o.success){
+                            // 登录成功
+                            if(!o.content.LOGIN_1688_MAIN_1){
+                                $("#rmpad_a").attr("href",url);
+                                $("#rmpad_img").attr("src",imgURL);
+                            }else{
+                                if(!o.content.LOGIN_1688_MAIN_1.landingURL){
+                                    $("#rmpad_a").attr("href",url);
+                                }else{
+                                    $("#rmpad_a").attr("href",o.content.LOGIN_1688_MAIN_1.landingURL);
+                                }
+                                if(!o.content.LOGIN_1688_MAIN_1.adPicURL){
+                                    $("#rmpad_img").attr("src",imgURL);
+                                }else{
+                                    $("#rmpad_img").attr("src",o.content.LOGIN_1688_MAIN_1.adPicURL);
+																}
+																
+																//for trace START
+																if ( o.content.LOGIN_1688_MAIN_1.trackInfo ){
+																	for ( var traceKey in o.content.LOGIN_1688_MAIN_1.trackInfo ){
+																		$("#rmpad_a").attr( traceKey, o.content.LOGIN_1688_MAIN_1.trackInfo[traceKey] );
+																	}
+																}
+																//for trace END
+                            }
+
+                        }else{
+                            //获取失败
+                            $("#rmpad_a").attr("href",url);
+                            $("#rmpad_img").attr("src",imgURL);
+                        }
+                    },
+                    error:function(o){
+                        //设置默认图片
+                        $("#rmpad_a").attr("href",url);
+                        $("#rmpad_img").attr("src",imgURL);
+                    }
+                });
+            }catch(e){
+                //设置默认图片
+                $("#rmpad_a").attr("href",url);
+                $("#rmpad_img").attr("src",imgURL);
+            }
+        }
+    });
+
+    $(function(){
+    	FM.quickloginInit();
+        FM.accountInit();
+        FM.placeholderInit();
+        FM.formInit();
+		FM.loginTab();
+		FM.initTab();
+		FM.setUmpAd("cbu_login_ad_ump");//
+    });
+})(jQuery, FE.member);
