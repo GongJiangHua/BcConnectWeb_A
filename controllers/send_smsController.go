@@ -56,5 +56,5 @@ func (s *SendSmsController) Post() {
 	//验证记录保存成功
 
 
-	s.TplName = "login_sms.html"
+	s.TplName = "login.html"
 }
