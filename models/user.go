@@ -50,3 +50,23 @@ func (u User) QuerUser() (*User, error) {
 	}
 	return &u, nil
 }
+//查询用户信息
+/*func (u User) QueryUser() (*User, error) {
+	//脱敏重新存储
+	u.Password = utils.MD5HashString(u.Password)
+	row, err := dbmysql.Db.Query("select phone,password from user where phone = ? and password = ?",
+		u.Phone, u.Password)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+	for row.Next() {
+		err := row.Scan(&u.Phone, &u.Password)
+		if err != nil {
+			log.Fatal(err)
+			return nil,err
+		}
+		log.Fatal(u.Phone, u.Password)
+	}
+	return &u, nil
+}*/

@@ -14,8 +14,12 @@ func init() {
     //注册接口
     beego.Router("/register",&controllers.RegisterController{})
 
-
+   //处理注册请求
    beego.Router("/register_sms",&controllers.RegisterSmsController{})
+
+    //已有账号接口
+    beego.Router("/loginSms",&controllers.RegisterSms{})
+
 
 
 }
