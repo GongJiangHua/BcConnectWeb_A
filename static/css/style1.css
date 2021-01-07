@@ -112,9 +112,7 @@ body {
     background: #fff;
     background-attachment: fixed;
     background: url(banner.jpg) no-repeat 0px 0px;
-
-
-background-size: cover;
+    background-size: cover;
     -webkit-background-size: cover;
     -o-background-size: cover;
     -moz-background-size: cover;
