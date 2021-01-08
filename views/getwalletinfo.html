@@ -2,11 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide Menu Bar</title>
+    <title>BTC节点查询系统</title>
     <link rel="stylesheet" href="../static/css/style4.css">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
 </head>
+<style>
+    #list li{
+        width: 300px;
+        margin-top: 5px;
+    }
+</style>
 <body>
 <input type="checkbox" id="check">
 <label for="check">
@@ -26,22 +32,37 @@
     </ul>
 </div>
 <section>
-    <ul style="margin:0px auto;width:80px;display:block">
+    <ul style="margin:0px auto;width:80px;display:block"id="list">
         <li>{{.NewAddress}}</li>
+        <li>钱包名称：</li>
         <li>{{.WalletInfo.WalletName}}</li>
+        <li>钱包版本：</li>
         <li>{{.WalletInfo.WalletVersion}}</li>
+        <li>钱包剩余零钱：</li>
         <li>{{.WalletInfo.Balance}}</li>
+        <li>钱包里不能使用的零钱：</li>
         <li>{{.WalletInfo.Unconfirmed_balance}}</li>
+        <li>钱包的Immature_balance：</li>
         <li>{{.WalletInfo.Immature_balance}}</li>
+        <li>钱包的Txcoun：</li>
         <li>{{.WalletInfo.Txcoun}}</li>
+        <li>钱包的Keypoololdest：</li>
         <li>{{.WalletInfo.Keypoololdest}}</li>
+        <li>钱包的Keypoolsize：</li>
         <li>{{.WalletInfo.Keypoolsize}}</li>
+        <li>钱包的Hdseedid：</li>
         <li>{{.WalletInfo.Hdseedid}}</li>
+        <li>钱包的Keypoolsize_hd_internal：</li>
         <li>{{.WalletInfo.Keypoolsize_hd_internal}}</li>
+        <li>钱包的Paytxfee：</li>
         <li>{{.WalletInfo.Paytxfee}}</li>
+        <li>钱包的Private_keys_enabled：</li>
         <li>{{.WalletInfo.Private_keys_enabled}}</li>
+        <li>钱包的Avoid_reuse：</li>
         <li>{{.WalletInfo.Avoid_reuse}}</li>
+        <li>钱包的Scanning：</li>
         <li>{{.WalletInfo.Scanning}}</li>
+        <li>钱包的Warnings：</li>
         <li>{{.BlockChainInfo.Warnings}}</li>
     </ul>
 </section>

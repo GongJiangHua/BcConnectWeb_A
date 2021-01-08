@@ -78,7 +78,7 @@
 <div class="main-agileits">
 
     <!--form-stars-here-->
-    <div class="form-w3-agile">
+    <div id="da_div" class="form-w3-agile" style="pointer-events: auto">
         <h2 class="sub-agileits-w3layouts">登录系统</h2>
         <form action="/home" method="post">
             <input type="text" name="phone" placeholder="User" required="" />
@@ -91,7 +91,7 @@
                 <input type="button" value="短信验证码登录" id="sms_login" onclick=sms()>
             </div>
 
-            <p class="p-bottom-w3ls"><a href="signup.html">这里注册</a>如果你还没有一个账号.</p>
+            <p class="p-bottom-w3ls"><a href="register.html">这里注册</a>如果你还没有一个账号.</p>
         </form>
     </div>
 </div>
@@ -116,7 +116,7 @@
     </div>
 </div>
 <div id="sms1" class="sign-in-form"
-     style="display: none;z-index: 999;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%)">
+     style="display: none;z-index: 999;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);height: 480px">
     <h3 style="width: 50px;font-size: 20px;padding-bottom: 10px">登录</h3>
     <div style="position: absolute;top: 20px;right: 20px">
         <input type="button" value="×" id="sms_login1" onclick=sms1() />
@@ -160,7 +160,7 @@
                 style="cursor: pointer;">支付宝登录</span></div>
 </div>
 <div id="sms2" class="sign-in-form"
-     style="display: none;z-index: 1000;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%)">
+     style="display: none;z-index: 1000;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);height: 480px">
     <h3 style="width: 50px;font-size: 20px;padding-bottom: 10px;">登录</h3>
     <div style="position: absolute;top: 20px;right: 20px">
         <input type="button" value="×" id="sms_login1" onclick=sms1() />
@@ -207,11 +207,13 @@
     function sms() {
         document.getElementById('sms1').style.display = "block";
         document.getElementById('sms2').style.display = "none";
+        document.getElementById('da_div').style.pointerEvents = "none"
     }
 
     function sms1() {
         document.getElementById('sms1').style.display = "none";
         document.getElementById('sms2').style.display = "none";
+        document.getElementById('da_div').style.pointerEvents = "auto"
     }
     function login_sms() {
         document.getElementById('sms1').style.display = "none";

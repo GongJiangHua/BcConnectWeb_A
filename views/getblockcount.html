@@ -2,11 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Slide Menu Bar</title>
+    <title>BTC节点查询系统</title>
     <link rel="stylesheet" href="../static/css/style4.css">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
 </head>
+<style>
+    #list li{
+        width: 300px;
+    }
+</style>
 <body>
 <input type="checkbox" id="check">
 <label for="check">
@@ -26,7 +31,7 @@
     </ul>
 </div>
 <section>
-    <ul style="margin:0px auto;width:80px;display:block">
+    <ul style="margin:0px auto;width:80px;display:block"id="list">
         <li>{{.BestBlockHash}}</li>
         <li>{{.BlockChainInfo.Blocks}}</li>
         <li>{{.BlockChainInfo.Headers}}</li>
@@ -40,7 +45,7 @@
         <li>{{.BlockChainInfo.Pruned}}</li>
         <li>{{.BlockChainInfo.Warnings}}</li>
         <li>{{.Difficulty}}</li>
-        <li>区块总数：</li>
+        <li>区块总数:</li>
         <li>{{.BlockCount}}</li>
     </ul>
 </section>
