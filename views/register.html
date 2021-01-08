@@ -1,29 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <title>BTC注册页面 </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/login.css">
-    <title>注册</title>
+
+
+    <!-- Custom Theme files -->
+    <link rel="stylesheet" type="text/css" href="../static/assets/waifu.css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="../static/css/snow.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <link rel="stylesheet" href="../static/css/style3.css">
+
 </head>
+<body class="oop" >
+<div class="snow-container">
+    <div class="snow foreground"></div>
+    <div class="snow foreground layered"></div>
+    <div class="snow middleground"></div>
+    <div class="snow middleground layered"></div>
+    <div class="snow background"></div>
+    <div class="snow background layered"></div>
+</div>
 
-<body data-vide-bg="static/image/block.jpg">
-<form method="post" action="/register_sms">
-<div class="login-form">
-    <h2>注册</h2>
-    <div class="form-input">
-        <input type="text" name="phone", placeholder="用户名">
-    </div>
-    <div class="form-input">
-        <input type="password" name="pwd", placeholder="密码">
-    </div>
-
-    <div class="form-input">
-        <input type="submit" name="register" value="注册">
+<div class="top-buttons-agileinfo">
+    <a href="/login.html"  class="active" methods="get">Sign In</a>
+</div>
+<h1>BTC客户端注册</h1>
+<div class="main-agileits">
+    <!--form-stars-here-->
+    <div class="form-w3-agile">
+        <h2 class="sub-agileits-w3layouts">注册</h2>
+        <form action="/register_sms" method="post">
+            <input type="text" name="phone" placeholder="Username" required=""/>
+            <input type="password" name="password" placeholder="Password" required=""/>
+            <div class="submit-w3l">
+                <input type="submit" value="注册">
+            </div>
+        </form>
     </div>
 </div>
-</form>
-<script src="../static/js/jquery-3.3.1.js"></script>
-<script src="../static/js/jquery.vide.js"></script>
+<!--//form-ends-here-->
+<!-- copyright -->
+<div class="copyright w3-agile">
+</div>
+<!-- //copyright -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+
+<script src="../static/assets/waifu-tips.js"></script>
+<script src="../static/assets/live2d.js"></script>
+<script type="text/javascript">initModel("../static/assets/")</script>
+
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
 </body>
 </html>

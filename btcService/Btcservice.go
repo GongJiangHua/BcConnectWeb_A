@@ -52,7 +52,10 @@ func GetBlockChainInfo() (*entity.BlockChainInfo,error) {
 		return nil,err
 	}
 	var blockchaininfo entity.BlockChainInfo
-	err = mapstructure.Decode(Rpcresult,&blockchaininfo)
+	err = mapstructure.Decode(Rpcresult.Result,&blockchaininfo)
+	if err != nil {
+		return nil,err
+	}
 	return &blockchaininfo,nil
 }
 
@@ -83,3 +86,16 @@ func GetNewAddress()(interface{},error)  {
 	}
 	return Rpcresult.Result, nil*/
 
+//用于获取钱包信息
+func GetWalletInfo() (*entity.WalletInfo,error) {
+	Rpcresult,err := utils.GetMsgByCommand("getwalletinfo")
+	if err != nil {
+		return nil,err
+	}
+	var blockchaininfo entity.WalletInfo
+	err = mapstructure.Decode(Rpcresult.Result,&blockchaininfo)
+	if err != nil {
+		return nil,err
+	}
+	return &blockchaininfo,nil
+}

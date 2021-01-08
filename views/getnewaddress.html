@@ -2,9 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Slide Menu Bar</title>
+    <link rel="stylesheet" href="../static/css/style4.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
 </head>
 <body>
-$END$
+<input type="checkbox" id="check">
+<label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+</label>
+<div class="sidebar">
+    <header style="color: seagreen">Wallet</header>
+    <ul>
+        <li><a href="/getnewaddress.html"><i class="fas fa-qrcode"></i>GetNewAddaess</a></li>
+        <li><a href="/getwalletinfo.html"><i class="fas fa-link"></i>GetWalletInfo</a></li>
+        <li><a href="#"><i class="fas fa-stream"></i>--待开发--</a></li>
+        <li><a href="#"><i class="fas fa-calendar-week"></i>--待开发--</a></li>
+        <li><a href="#"><i class="far fa-question-circle"></i>--待开发--</a></li>
+        <li><a href="#"><i class="fas fa-sliders-h"></i>--待开发--</a></li>
+        <li><a href="#"><i class="far fa-envelope"></i>--待开发--</a></li>
+    </ul>
+</div>
+<section>
+    <ul style="margin:0px auto;width:80px;display:block">
+        <li>{{.NewAddress}}</li>
+        <li>{{.WalletInfo.WalletName}}</li>
+        <li>{{.WalletInfo.WalletVersion}}</li>
+        <li>{{.WalletInfo.Balance}}</li>
+        <li>{{.WalletInfo.Unconfirmed_balance}}</li>
+        <li>{{.WalletInfo.Immature_balance}}</li>
+        <li>{{.WalletInfo.Txcoun}}</li>
+        <li>{{.WalletInfo.Keypoololdest}}</li>
+        <li>{{.WalletInfo.Keypoolsize}}</li>
+        <li>{{.WalletInfo.Hdseedid}}</li>
+        <li>{{.WalletInfo.Keypoolsize_hd_internal}}</li>
+        <li>{{.WalletInfo.Paytxfee}}</li>
+        <li>{{.WalletInfo.Private_keys_enabled}}</li>
+        <li>{{.WalletInfo.Avoid_reuse}}</li>
+        <li>{{.WalletInfo.Scanning}}</li>
+        <li>{{.BlockChainInfo.Warnings}}</li>
+    </ul>
+</section>
 </body>
 </html>

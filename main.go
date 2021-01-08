@@ -1,8 +1,10 @@
 package main
 
 import (
+	"BcConnectWeb_A/btcService"
 	"BcConnectWeb_A/dbmysql"
 	_ "BcConnectWeb_A/routers"
+	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -29,13 +31,23 @@ func main() {
 	//}
 	//fmt.Println("最新区块的hash:", hash)
 	//
-	////获取区块的难度
+	//获取区块的难度
 	//difficulty,err :=btcService.GetDifficulty()
 	//if err != nil{
 	//	fmt.Println(err.Error())
 	//	return
 	//}
 	//fmt.Println("获取区块的难度:",difficulty)
+	//
+	BlockChainInfo ,err := btcService.GetBlockChainInfo()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println("BlockChainInfo",BlockChainInfo)
+
+
+
 	//
 	//address,err :=btcService.GetNewAddress()
 	//if err!= nil{
@@ -44,6 +56,13 @@ func main() {
 	//}
 	//fmt.Println("获取新地址:",address)
 
+
+	//walletinfo,err :=btcService.GetWalletInfo()
+	//if err!= nil{
+	//	fmt.Println(err.Error())
+	//	return
+	//}
+	//fmt.Println("钱包信息:",walletinfo)
 	dbmysql.Connect()
 	//设置静态资源文件映射
 	beego.SetStaticPath("/js", "./static/js")

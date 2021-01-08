@@ -20,7 +20,10 @@ func (c * RegisterSmsController) Post() {
 	var user models.User
 	err :=c.ParseForm(&user)
 	if err!= nil{
-		c.Ctx.WriteString("数据解析失败")
+		c.TplName = "error.html"
+		//c.Ctx.WriteString("抱歉，用户登录失败，请重试")
+		err := "数据解析失败"
+		c.Data["Error"]=err
 	}
 	fmt.Println("电话",user.Phone)
 
@@ -28,7 +31,10 @@ func (c * RegisterSmsController) Post() {
 	_,err =user.AddUser()
 	if err != nil{
 		fmt.Println(err.Error())
-		c.Ctx.WriteString("用户注册失败")
+		c.TplName = "error.html"
+		err := "添加用户信息失败，请重新尝试！！！"
+		c.Data["Error"]=err
+		//c.Ctx.WriteString("用户注册失败")
 		return
 	}
 	//fmt.Println(res)

@@ -4,14 +4,19 @@
 <head>
     <meta charset="utf-8">
     <title></title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/style5.css">
 </head>
+<style>
+    #button:hover{
+        cursor: pointer;
+    }
+</style>
 <body>
 <div class="container">
     <h2 style="-ms-background-position-y:100px ">Oops! Page not found.</h2>
     <h2 >{{.Error}}</h2>
     <p>We can't find the page you're looking for.</p>
-    <a type="button" onclick=goBack()>Go back home</a>
+    <a type="button" onclick=goBack() id="button">Go back home</a>
 </div>
 </body>
 <script>

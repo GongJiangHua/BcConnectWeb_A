@@ -12,6 +12,10 @@ func (c *RegisterController) Get() {
 	c.TplName = "register.html"
 }
 
+func (c *RegisterController)Post()  {
+	
+}
+
 
 
 

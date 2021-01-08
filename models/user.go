@@ -3,6 +3,7 @@ package models
 import (
 	"BcConnectWeb_A/dbmysql"
 	"BcConnectWeb_A/utils"
+	"fmt"
 	"log"
 )
 
@@ -28,11 +29,11 @@ func (u User) AddUser() (int64, error) {
 	return id, nil
 }
 
-//查询信息
-func (u User) QuerUser() (*User, error) {
+//查询验证码信息
+func (u User) QuerUserSms() (*User, error) {
 	u.Password = utils.MD5HashString(u.Password)
 	/*row := dbmysql.Db.QueryRow("select phone,password from user where phone = ? and password = ?",
-	u.Phone, u.Password)
+	  u.Phone, u.Password)
 	*/
 	row, err := dbmysql.Db.Query("select phone,password from user where phone = ? and password = ?",
 		u.Phone, u.Password)
@@ -49,4 +50,18 @@ func (u User) QuerUser() (*User, error) {
 		log.Fatal(u.Phone, u.Password)
 	}
 	return &u, nil
+}
+
+//查询信息
+func (u User) QuerUser() (*User, error) {
+	u.Password = utils.MD5HashString(u.Password)
+	row := dbmysql.Db.QueryRow("select phone , password from user where phone = ? and password = ?", u.Phone, u.Password)
+
+	err := row.Scan(&u.Phone,&u.Password)
+	if err != nil {
+		return nil, err
+	}
+	fmt.Println("user1、password1:",u.Phone,u.Password)
+
+	return &u, err
 }

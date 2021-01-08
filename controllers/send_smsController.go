@@ -38,6 +38,8 @@ func (s *SendSmsController) Post() {
 		s.Data["Error"] = "验证码发送失败，请重试"
 		s.TplName = "err.html"
 	}
+	fmt.Println("fadsfasd:",phone)
+	fmt.Println("fadsfasd:",code)
 	if len(result.BizId) == 0 {
 		//s.Ctx.WriteString("错误："+result.Message)
 		s.Data["Error"] = "错误：请输入正确的手机号码"

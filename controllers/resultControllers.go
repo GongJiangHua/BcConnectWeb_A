@@ -29,6 +29,9 @@ func (s *SerchResultControllers) Post() {
 		s.TplName = "network.html"
 	}else {
 		s.TplName = "error.html"
+		err := "请输入正确的查询范围！！！"
+		s.Data["Error"]=err
+		//s.Ctx.WriteString("请输入正确的查询范围！！！")
 	}
 	//s.Data["SearchMes"]=serchText
 }

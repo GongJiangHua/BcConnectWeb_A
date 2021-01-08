@@ -1,25 +1,38 @@
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/login.css">
-    <title>登录</title>
+    <title>BTC登录页面 </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Custom Theme files -->
+    <link rel="stylesheet" type="text/css" href="../static/assets/waifu.css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link href="../static/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all">
+    <link href="../static/css/snow.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../static/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- //Custom Theme files -->
+
 </head>
 <style>
     #sms_login {
         display: block;
-        width: 150px;
+        width: 100%;
         height: 40px;
         font-size: 15px;
+        font-weight: 800;
         border: none;
-        background: #e91e63;
-        color: #f0f0f0;
+        background: #fff;
+        color: #000;
         border-radius: 5px;
         margin: auto;
     }
     #sms_login:hover{
-        background: #5178dd;
+        background: #df5799;
+        color: #fff;
         cursor: pointer;
 
     }
@@ -45,34 +58,65 @@
         cursor: pointer;
         color: #ffffff;
     }
-
 </style>
-<body data-vide-bg="static/image/block.jpg">
-<div class="login-form">
-    <form method="post" action="/home">
-        <h2>BlockChain查询系统</h2>
-        <div class="form-input">
-            <input type="text" name="" placeholder="用户名">
-        </div>
-        <div class="form-input">
-            <input type="password" name="" placeholder="密码">
-        </div>
-        <div class="form-input">
-            <a href="home.html">
-                <input type="submit" name="登录" value="登录">
-            </a>
+<body>
+<div class="snow-container">
 
-        </div>
-        <a href="#" class="forget">忘记密码?</a>
-        <a href="register.html" class="register">立即注册</a>
-        <p></p>
-        {{/*    <a href="/send_sms" id="sms_login">短信验证码登录</a>*/}}
-        <input type="button" value="短信验证码登录" id="sms_login" onclick=sms()>
-    </form>
+    <div class="snow foreground"></div>
+    <div class="snow foreground layered"></div>
+    <div class="snow middleground"></div>
+    <div class="snow middleground layered"></div>
+    <div class="snow background"></div>
+    <div class="snow background layered"></div>
+
+</div>
+
+<div class="top-buttons-agileinfo">
+    <a href="register.html" class="active">注册</a>
+</div>
+<h1>BTC注册页面</h1>
+<div class="main-agileits">
+
+    <!--form-stars-here-->
+    <div class="form-w3-agile">
+        <h2 class="sub-agileits-w3layouts">登录系统</h2>
+        <form action="/home" method="post">
+            <input type="text" name="phone" placeholder="User" required="" />
+            <input type="password" name="password" placeholder="Password" required="" />
+            <a href="#" class="forgot-w3layouts">忘记密码 ?</a>
+            <div class="submit-w3l">
+                <input type="submit" value="登录" style="border-radius: 5px">
+            </div>
+            <div class="submit-w3l" style="padding-top: 15px">
+                <input type="button" value="短信验证码登录" id="sms_login" onclick=sms()>
+            </div>
+            <p class="p-bottom-w3ls"><a href="signup.html">这里注册</a>如果你还没有一个账号.</p>
+        </form>
+    </div>
+</div>
+<!--//form-ends-here-->
+<!-- copyright -->
+<div class="copyright w3-agile">
+</div>
+<!-- //copyright -->
+<script type="text/javascript" src="jquery-2.1.4.min.js"></script>
+
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
 </div>
 <div id="sms1" class="sign-in-form"
      style="display: none;z-index: 999;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%)">
-    <h3>登录</h3>
+    <h3 style="width: 50px;font-size: 20px;padding-bottom: 10px">登录</h3>
     <div style="position: absolute;top: 20px;right: 20px">
         <input type="button" value="×" id="sms_login1" onclick=sms1() />
     </div>
@@ -91,13 +135,13 @@
             <div class="code" style="margin-bottom: 0px;">
                 <div class="column-input input-component" style="margin-right: 0px;width: 340px;padding-bottom: 14px;padding-right: 10px">
                     <input type="text" name="code"
-                           style="width: 205px;height: 44px;padding-left: 14px;margin-right: 10px"
+                           style="width: 200px;height: 44px;padding-left: 14px;margin-right: 10px"
                            value=""
                            placeholder="请输入验证码"
                            draggable="false"
                            autocomplete="on"><span
                             class="error-text"></span>
-                <button id="button_sms" type="submit" class="login-code" style="width: 100px;height: 48px;position: relative;top: 2px;left: 5px" onclick="login_sms()">发送验证码</button>
+                    <button id="button_sms" type="submit" class="login-code" style="width: 100px;height: 48px;position: relative;top: 2px;left: 5px" onclick="login_sms()">发送验证码</button>
                 </div>
             </div>
             <div style="margin: 16px 0px 21px 2px; font-size: 14px; display: flex; align-items: center; justify-content: space-between;">
@@ -116,7 +160,7 @@
 </div>
 <div id="sms2" class="sign-in-form"
      style="display: block;z-index: 1000;position: fixed;position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%)">
-    <h3>登录</h3>
+    <h3 style="width: 50px;font-size: 20px;padding-bottom: 10px">登录</h3>
     <div style="position: absolute;top: 20px;right: 20px">
         <input type="button" value="×" id="sms_login1" onclick=sms1() />
     </div>
@@ -136,13 +180,13 @@
             <div class="code" style="margin-bottom: 0px;">
                 <div class="column-input input-component" style="margin-right: 0px;width: 340px;padding-bottom: 14px;padding-right: 10px">
                     <input type="text" name="code"
-                           style="width: 205px;height: 44px;padding-left: 14px;margin-right: 10px"
+                           style="width: 200px;height: 44px;padding-left: 14px;margin-right: 10px"
                            value=""
                            placeholder="请输入验证码"
                            draggable="false"
                            autocomplete="on"><span
                             class="error-text"></span>
-{{/*                    <button id="button_sms1" type="button" class="login-code" style="width: 100px;height: 48px;position: relative;top: 2px;left: 5px" disabled onclick="login_sms()">发送验证码</button>*/}}
+                    {{/*                    <button id="button_sms1" type="button" class="login-code" style="width: 100px;height: 48px;position: relative;top: 2px;left: 5px" disabled onclick="login_sms()">发送验证码</button>*/}}
                     <button id="button_sms1" type="submit" formaction="/send_sms" class="login-code" style="width: 100px;height: 48px;position: relative;top: 2px;left: 2px" disabled onclick="login_sms()">发送验证码</button>
                 </div>
             </div>
@@ -162,8 +206,6 @@
                 style="margin: 0px 6px 0px 14px; cursor: pointer;"><span
                 style="cursor: pointer;">支付宝登录</span></div>
 </div>
-<script src="../static/js/jquery-3.3.1.js"></script>
-<script src="../static/js/jquery.vide.js"></script>
 <script>
     var time = 4;
     var clean = setInterval(function () {
@@ -206,16 +248,9 @@
 
     }
 </script>
-{{/*<script type="text/javascript">*/}}
-{{/*    var time = 60;*/}}
-{{/*    var clean = setInterval(function () {*/}}
-{{/*        time = time - 1;*/}}
-{{/*        document.getElementById("time").innerHTML = time;*/}}
-{{/*        if(time == 0){*/}}
-{{/*            document.getElementById("button_sms1").disabled = false;*/}}
-{{/*            clearInterval(clean);*/}}
-{{/*        }*/}}
-{{/*    }, 1000);*/}}
-{{/*    </script>*/}}
+<script src="../static/assets/waifu-tips.js"></script>
+<script src="../static/assets/live2d.js"></script>
+<script type="text/javascript">initModel("../static/assets/")</script>
+
 </body>
 </html>

@@ -1,10 +1,38 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>错误页面</title>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../static/assets/waifu.css"/>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/style5.css">
 </head>
 <body>
-<p>不好意思，该系统未搜索到你想要的信息</p>
+<div class="container">
+    <h2 style="-ms-background-position-y:100px ">{{.Error}}</h2>
+    <h1 >Error</h1>
+    <p>We can't find the page you're looking for.</p>
+    <a href="home.html">Go back home</a>
+
+    <div class="waifu">
+        <div class="waifu-tips"></div>
+        <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+        <div class="waifu-tool">
+            <span class="fui-home"></span>
+            <span class="fui-chat"></span>
+            <span class="fui-eye"></span>
+            <span class="fui-user"></span>
+            <span class="fui-photo"></span>
+            <span class="fui-info-circle"></span>
+            <span class="fui-cross"></span>
+        </div>
+    </div>
+
+    <script src="../static/assets/waifu-tips.js"></script>
+    <script src="../static/assets/live2d.js"></script>
+    <script type="text/javascript">initModel("../static/assets/")</script>
+
+</div>
 </body>
 </html>

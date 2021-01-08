@@ -11,7 +11,7 @@ type LoginSmsController struct {
 }
 
 func (l *LoginSmsController) Get() {
-	l.TplName = "login_sms.html"
+	l.TplName = "home.html"
 }
 
 /**
@@ -31,11 +31,12 @@ func (l *LoginSmsController) Post() {
 	user := models.User{
 		Phone:    smsLogin.Phone,
 	}
-	u,err := user.QuerUser()
+	u,err := user.QuerUserSms()
 	if err != nil {
 		//l.Ctx.WriteString("对不起，登陆失败，请重试")
 		l.Data["Error"] = "对不起，登陆失败，请重试"
 		l.TplName = "err.html"
+		fmt.Println(err.Error())
 		return
 	}
 	if u.Phone == "" {
@@ -66,5 +67,5 @@ func (l *LoginSmsController) Post() {
 	//	return
 	//}
 
-	l.TplName = "zhihu_login_sms.html"
+	l.TplName = "home.html"
 }

@@ -6,6 +6,10 @@ type SortFork struct {
 	Bip65 Bip
 	Csv Bip
 	Segwit Bip
+
+	//Bip Softfprk`json:"bip"`
+	//Csv Softfprk`json:"csv"`
+	//Srgwit Softfprk`json:"srgwit"`
 }
 
 

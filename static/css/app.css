@@ -91,9 +91,3 @@ h1 {
 #leftNavigation > li.active {
   background-color: #427c97;
 }
-#leftNavigation li.active1{
-  display: none;
-}
-#leftNavigation li.active1.b{
- margin-top: 30px;
-}

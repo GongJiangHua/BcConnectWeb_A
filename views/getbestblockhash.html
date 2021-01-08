@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Slide Menu Bar</title>
+    <link rel="stylesheet" href="../static/css/style4.css">
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.css">
 </head>
 <body>
-$END$
+<input type="checkbox" id="check">
+<label for="check">
+    <i class="fas fa-bars" id="btn"></i>
+    <i class="fas fa-times" id="cancel"></i>
+</label>
+<div class="sidebar">
+    <header style="color: seagreen">BlockChain</header>
+    <ul>
+        <li><a href="/getbestblockhash.html"><i class="fas fa-qrcode"></i>GetBestBlockHash</a></li>
+        <li><a href="/getblockchaininfo.html"><i class="fas fa-link"></i>GetBlockChainInfo</a></li>
+        <li><a href="/getdifficulty.html"><i class="fas fa-stream"></i>GetDifficulty</a></li>
+        <li><a href="/getblockcount.html"><i class="fas fa-calendar-week"></i>GetBlockCount</a></li>
+        <li><a href="#"><i class="far fa-question-circle"></i>--待开发--</a></li>
+        <li><a href="#"><i class="fas fa-sliders-h"></i>--待开发--</a></li>
+        <li><a href="#"><i class="far fa-envelope"></i>--待开发--</a></li>
+    </ul>
+</div>
+<section>
+    <ul style="margin:0px auto;width:80px;display:block">
+        <li>{{.Text}}</li>
+        <li>{{.BestBlockHash}}</li>
+        <li>{{.BlockChainInfo.Blocks}}</li>
+        <li>{{.BlockChainInfo.Headers}}</li>
+        <li>{{.BlockChainInfo.BestBlockHash}}</li>
+        <li>{{.BlockChainInfo.Difficulty}}</li>
+        <li>{{.BlockChainInfo.Mediantime}}</li>
+        <li>{{.BlockChainInfo.Verificationprogress}}</li>
+        <li>{{.BlockChainInfo.Initialblockdownload}}</li>
+        <li>{{.BlockChainInfo.Chainblock}}</li>
+        <li>{{.BlockChainInfo.Size_on_desk}}</li>
+        <li>{{.BlockChainInfo.Pruned}}</li>
+        <li>{{.BlockChainInfo.Warnings}}</li>
+        <li>{{.Difficulty}}</li>
+        <li>{{.BlockCount}}</li>
+    </ul>
+</section>
 </body>
 </html>
