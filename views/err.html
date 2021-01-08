@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+<div class="container">
+    <h2 style="-ms-background-position-y:100px ">Oops! Page not found.</h2>
+    <h2 >{{.Error}}</h2>
+    <p>We can't find the page you're looking for.</p>
+    <a type="button" onclick=goBack()>Go back home</a>
+</div>
+</body>
+<script>
+    function goBack() {
+        window.history.back()
+    }
+</script>
+</html>
