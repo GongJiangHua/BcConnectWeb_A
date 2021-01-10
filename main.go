@@ -30,7 +30,7 @@ func main() {
 	//	return
 	//}
 	//fmt.Println("最新区块的hash:", hash)
-	
+
 	//获取区块的难度
 	//difficulty,err :=btcService.GetDifficulty()
 	//if err != nil{

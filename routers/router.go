@@ -17,6 +17,10 @@ func init() {
     beego.Router("/register_sms",&controllers.RegisterSmsController{})
 	//查询页面获取用户想要查询的内容，进行分析
 	beego.Router("/index",&controllers.SerchResultControllers{})
+    //用户点击历史记录直接进行跳转到相关页面
+    beego.Router("/blockchain.html",&controllers.BlockChain{})
+    beego.Router("/wallet.html",&controllers.Wallet{})
+    beego.Router("/network.html",&controllers.NetWork{})
     //SIGN IN实现用户直接登录
     beego.Router("/login.html",&controllers.MainController{})
 	//有关比特币页面显示的路由
